@@ -134,7 +134,7 @@ $(MONGO_GPG):
 	curl -fsSL https://pgp.mongodb.com/server-$(MONGO_VER).asc | \
 		sudo gpg --dearmor -o $(MONGO_GPG)
 $(MONGO_APT): $(MONGO_GPG)
-	echo "deb [ signed-by=$<] http://repo.mongodb.org/apt/debian bullseye/mongodb-org/$(MONGO_VER) main" | \
+	echo "deb [signed-by=$<] http://repo.mongodb.org/apt/debian bullseye/mongodb-org/$(MONGO_VER) main" | \
 		sudo tee $@
 $(MONGO_SSL): $(GZ)/libssl1.deb
 	sudo dpkg -i $< && sudo touch $@
