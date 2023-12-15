@@ -4,8 +4,12 @@ body {
 }
 
 * {
-    color: lightgreen;
     font-family: monospace;
+}
+
+h1,
+p {
+    color: lightgreen;
 }
 
 #logo {
@@ -16,4 +20,8 @@ body {
     position: absolute;
     left: 0;
     bottom: 0;
+}
+
+.ui-widget {
+    /* color: black; */
 }
