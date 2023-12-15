@@ -129,6 +129,7 @@ MONGO_SSL = /usr/lib/x86_64-linux-gnu/libssl.so.1.1
 mongo: $(MONGO_APT) $(MONGO_SSL)
 	sudo apt update
 	sudo apt install -uy mongodb-org
+	sudo systemctl enable mongod --now
 $(MONGO_GPG):
 	curl -fsSL https://pgp.mongodb.com/server-$(MONGO_VER).asc | \
 		sudo gpg --dearmor -o $(MONGO_GPG)
