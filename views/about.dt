@@ -1,0 +1,10 @@
+extends layout
+
+block body
+    h1 mops
+    h2 Multihead Overlapping Projection System
+    p
+    p
+        (c) Dmitry Ponyatov
+        a(href="mailto:dponyatov@gmail.com") dponyatov@gmail.com
+        2023 MIT
