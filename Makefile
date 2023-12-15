@@ -7,6 +7,14 @@ JQUERY_UI        = 1.13.2
 JQUERY_THEME     = dark-hive
 JQUERY_THEME_VER = 1.12.1
 
+# dir
+CWD = $(CURDIR)
+BIN = $(CWD)/bin
+DOC = $(CWD)/doc
+SRC = $(CWD)/src
+TMP = $(CWD)/tmp
+GZ  = $(HOME)/gz
+
 # tool
 CURL = curl -L -o
 DC   = dmd
@@ -79,3 +87,33 @@ $(GZ)/jquery-ui-$(JQUERY_UI).zip:
 	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-$(JQUERY_UI).zip
 $(GZ)/jquery-ui-themes-$(JQUERY_UI).zip:
 	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-themes-$(JQUERY_UI).zip
+
+# merge
+MERGE += Makefile README.md LICENSE $(D) $(J) $(T)
+MERGE += .clang-format .editorconfig .gitattributes .gitignore
+MERGE += apt.txt
+MERGE += bin doc lib inc src tmp public views
+
+.PHONY: dev
+dev:
+	git push -v
+	git checkout $@
+	git pull -v
+	git checkout shadow -- $(MERGE)
+#	$(MAKE) doxy ; git add -f docs
+
+.PHONY: shadow
+shadow:
+	git push -v
+	git checkout $@
+	git pull -v
+
+.PHONY: release
+release:
+	git tag $(NOW)-$(REL)
+	git push -v --tags
+	$(MAKE) shadow
+
+ZIP = tmp/$(MODULE)_$(NOW)_$(REL)_$(BRANCH).zip
+zip:
+	git archive --format zip --output $(ZIP) HEAD
