@@ -40,7 +40,7 @@ tmp/format_d: $(D)
 
 # rule
 bin/$(MODULE): $(D) $(J) $(T) Makefile
-	dub build -c $(CONFIG)
+	$(BLD)
 
 # doc
 doc: doc/yazyk_programmirovaniya_d.pdf doc/Programming_in_D.pdf \

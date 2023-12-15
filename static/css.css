@@ -1,0 +1,19 @@
+html,
+body {
+    background: #222;
+}
+
+* {
+    color: lightgreen;
+    font-family: monospace;
+}
+
+#logo {
+    max-width: 64px;
+}
+
+#footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

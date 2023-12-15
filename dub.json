@@ -1,5 +1,5 @@
 {
-    "name":          "d",
+    "name":          "wad",
     "description":   "WebCAD",
     "homepage":      "https://github.com/ponyatov/wad",
     "authors":      ["Dmitry Ponyatov <dponyatov@gmail.com>"],
@@ -8,6 +8,7 @@
     "targetType":    "executable",
     "targetPath":    "bin",
     "dependencies": {
-        "vibe-d": "~>0.9.7"
+        "vibe-d": "~>0.9.7",
+        "fswatch": "~>0.6.1"
     }
 }

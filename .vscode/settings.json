@@ -35,5 +35,10 @@
     // D
     "d.dubPath": "/usr/bin/dub",
     "d.dmdPath": "/usr/bin/dmd",
-    "d.dubCompiler": "/usr/bin/dmd"
+    "d.dubCompiler": "/usr/bin/dmd",
+
+    // Web
+    "[css]": {
+        "editor.formatOnSave": true
+    }
 }
