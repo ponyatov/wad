@@ -119,3 +119,11 @@ release:
 ZIP = tmp/$(MODULE)_$(NOW)_$(REL)_$(BRANCH).zip
 zip:
 	git archive --format zip --output $(ZIP) HEAD
+
+
+MONGO_GPG = /usr/share/keyrings/mongodb-server-6.0.gpg
+.PHONY: mongo
+mongo: $(MONGO_GPG)
+$(MONGO_GPG):
+	curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+		sudo gpg --dearmor -o $(MONGO_GPG)
