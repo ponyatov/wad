@@ -17,26 +17,23 @@ static this() {
     router = new URLRouter;
 }
 
+shared bool stop = false;
+
 void watcher() {
     auto src = FileWatch("src/", true);
     auto views = FileWatch("views/", true);
     auto dub = FileWatch("dub.json", true);
-    while (true) {
+    while (!stop) {
         Thread.sleep(1111.msecs);
-        foreach (e; src.getEvents)
+        foreach (e; src.getEvents ~ views.getEvents ~ dub.getEvents) {
+            stop = true;
             writeln(e.path, '\t', e.type);
-        foreach (e; views.getEvents)
-            writeln(e.path, '\t', e.type);
-        foreach (e; dub.getEvents)
-            writeln(e.path, '\t', e.type);
+        }
     }
 }
 
 void main(string[] args) {
     writeln(args);
-    // autorestart
-    spawn(&watcher);
-    // web service
     // 
     router.get("/", staticTemplate!"index.dt");
     router.get("/about/", staticTemplate!"about.dt");
@@ -44,8 +41,14 @@ void main(string[] args) {
     router.get("/favicon.ico", serveStaticFile("static/logo.png"));
     router.get("*", serveStaticFiles("static/"));
     // 
-    listenHTTP(settings, router);
+    auto listener = listenHTTP(settings, router);
+    scope (exit) listener.stopListening();
+    auto watcherTid = spawn(&watcher);
     runApplication();
+    // if (stop) {
+    //     listener.stopListening();
+    //     vibe.core.core.exitEventLoop();
+    // }
 }
 
 void error(HTTPServerRequest req, HTTPServerResponse res,
