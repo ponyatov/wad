@@ -1,4 +1,4 @@
 git make curl
 code meld doxygen clang-format
 g++ dmd
-
+inotify-tools

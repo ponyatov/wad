@@ -10,5 +10,8 @@
     "dependencies": {
         "vibe-d": "~>0.9.7",
         "fswatch": "~>0.6.1"
-    }
+    },
+    "versions": [
+        "FSWForcePoll"
+    ]
 }
