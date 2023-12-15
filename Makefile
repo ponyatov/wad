@@ -60,7 +60,7 @@ doc/BuildTimekeepWithVibe.pdf:
 
 # install
 .PHONY: install update doc gz
-install: doc gz
+install: doc gz mongo
 	$(MAKE) update
 	dub fetch dfmt
 update:
@@ -120,10 +120,16 @@ ZIP = tmp/$(MODULE)_$(NOW)_$(REL)_$(BRANCH).zip
 zip:
 	git archive --format zip --output $(ZIP) HEAD
 
-
-MONGO_GPG = /usr/share/keyrings/mongodb-server-6.0.gpg
 .PHONY: mongo
-mongo: $(MONGO_GPG)
+# https://nspeaks.com/install-mongodb-on-debian-12/
+MONGO_VER = 6.0
+MONGO_GPG = /usr/share/keyrings/mongodb-server-$(MONGO_VER).gpg
+MONGO_APT = /etc/apt/sources.list.d/mongodb-org-$(MONGO_VER).list
+mongo: $(MONGO_APT)
+	$(MAKE) update
 $(MONGO_GPG):
-	curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+	curl -fsSL https://pgp.mongodb.com/server-$(MONGO_VER).asc | \
 		sudo gpg --dearmor -o $(MONGO_GPG)
+$(MONGO_APT): $(MONGO_GPG)
+	echo "deb [ signed-by=$<] http://repo.mongodb.org/apt/debian bullseye/mongodb-org/$(MONGO_VER) main" | \
+		sudo tee $@
