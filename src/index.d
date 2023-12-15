@@ -7,6 +7,7 @@ class Index {
         render!"index.dt";
     }
 
+    // /find_employee
     void getFindEmployee() {
         response.writeBody("This is getFindEmployee");
     }

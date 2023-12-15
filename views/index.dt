@@ -3,3 +3,8 @@ extends layout
 block body
     h1 Example page - Home
     p Hello, World!
+    form(method="get", action="/find_employee")
+        input#first( name="first" , type="text"  , placeholder="first" )
+        input#second(name="second", type="text"  , placeholder="second")
+        input#reset(                type="reset" , value="Clear"       )
+        input#submit(               type="submit", value="Submit"      )
