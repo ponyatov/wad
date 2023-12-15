@@ -25,6 +25,7 @@ RUN  = dub run   --compiler=$(DC)
 D += $(wildcard src/*.d)
 J += $(wildcard *.json)
 T += $(wildcard views/*.dt)
+S += $(wildcard static/*.js)
 
 # all
 .PHONY: all run
@@ -34,9 +35,11 @@ run: $(D) $(J) $(T)
 
 # format
 .PHONY: format
-format: tmp/format_d
+format: tmp/format_d tmp/format_js
 tmp/format_d: $(D)
 	$(RUN) dfmt -- -i $? && touch $@
+tmp/format_js: $(S)
+	clang-format -style=file -i $? && touch $@
 
 # rule
 bin/$(MODULE): $(D) $(J) $(T) Makefile
@@ -89,7 +92,7 @@ $(GZ)/jquery-ui-themes-$(JQUERY_UI).zip:
 	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-themes-$(JQUERY_UI).zip
 
 # merge
-MERGE += Makefile README.md LICENSE apt.txt $(D) $(J) $(T)
+MERGE += Makefile README.md LICENSE apt.txt $(D) $(J) $(T) $(S)
 MERGE += .clang-format .editorconfig .gitattributes .gitignore
 MERGE += bin doc lib inc src tmp public views
 
