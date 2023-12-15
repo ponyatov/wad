@@ -125,17 +125,17 @@ zip:
 MONGO_VER = 6.0
 MONGO_GPG = /usr/share/keyrings/mongodb-server-$(MONGO_VER).gpg
 MONGO_APT = /etc/apt/sources.list.d/mongodb-org-$(MONGO_VER).list
-MONGO_SSL = /usr/lib/x86_64-linux-gnu/libssl1.so
+MONGO_SSL = /usr/lib/x86_64-linux-gnu/libssl.so.1.1
 mongo: $(MONGO_APT) $(MONGO_SSL)
-	$(MAKE) update
+	sudo apt update
+	sudo apt install -uy mongodb-org
 $(MONGO_GPG):
 	curl -fsSL https://pgp.mongodb.com/server-$(MONGO_VER).asc | \
 		sudo gpg --dearmor -o $(MONGO_GPG)
 $(MONGO_APT): $(MONGO_GPG)
 	echo "deb [ signed-by=$<] http://repo.mongodb.org/apt/debian bullseye/mongodb-org/$(MONGO_VER) main" | \
 		sudo tee $@
-
 $(MONGO_SSL): $(GZ)/libssl1.deb
-	sudo dpkg -i $<
+	sudo dpkg -i $< && sudo touch $@
 $(GZ)/libssl1.deb:
 	$(CURL) $@ https://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1n-0+deb11u5_amd64.deb
