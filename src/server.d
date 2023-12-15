@@ -6,6 +6,8 @@ import core.thread;
 import fswatch;
 import vibe.vibe;
 
+import index;
+
 HTTPServerSettings settings = null;
 URLRouter router = null;
 
@@ -35,15 +37,17 @@ void watcher() {
 void main(string[] args) {
     writeln(args);
     // 
-    router.get("/", staticTemplate!"index.dt");
+    router.registerWebInterface(new Index);
+    // router.get("/", staticTemplate!"index.dt");
     router.get("/about/", staticTemplate!"about.dt");
     // 
     router.get("/favicon.ico", serveStaticFile("static/logo.png"));
     router.get("*", serveStaticFiles("static/"));
     // 
     auto listener = listenHTTP(settings, router);
-    scope (exit) listener.stopListening();
-    auto watcherTid = spawn(&watcher);
+    scope (exit)
+        listener.stopListening();
+    // auto watcherTid = spawn(&watcher);
     runApplication();
     // if (stop) {
     //     listener.stopListening();

@@ -9,6 +9,7 @@ html(lang='ru')
     body
         // img(src="/logo.png",id='logo')
         block body
+        block footer
         div#footer
             a.ui-button.ui-icon-home(href="/") home
             a(class="ui-button ui-icon-help",href="/about/") about
