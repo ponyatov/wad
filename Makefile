@@ -89,9 +89,8 @@ $(GZ)/jquery-ui-themes-$(JQUERY_UI).zip:
 	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-themes-$(JQUERY_UI).zip
 
 # merge
-MERGE += Makefile README.md LICENSE $(D) $(J) $(T)
+MERGE += Makefile README.md LICENSE apt.txt $(D) $(J) $(T)
 MERGE += .clang-format .editorconfig .gitattributes .gitignore
-MERGE += apt.txt
 MERGE += bin doc lib inc src tmp public views
 
 .PHONY: dev
