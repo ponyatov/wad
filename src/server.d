@@ -17,21 +17,25 @@ static this() {
     router = new URLRouter;
 }
 
-void watcher(int iN) {
-    auto watcher = FileWatch("src/", true);
-    int n=iN;
+void watcher() {
+    auto src = FileWatch("src/", true);
+    auto views = FileWatch("views/", true);
+    auto dub = FileWatch("dub.json", true);
     while (true) {
-        writeln(thisTid,n++);
         Thread.sleep(1111.msecs);
+        foreach (e; src.getEvents)
+            writeln(e.path, '\t', e.type);
+        foreach (e; views.getEvents)
+            writeln(e.path, '\t', e.type);
+        foreach (e; dub.getEvents)
+            writeln(e.path, '\t', e.type);
     }
 }
 
 void main(string[] args) {
     writeln(args);
     // autorestart
-    foreach (i; 0..10)
-    spawn(&watcher,i*100);
-    // Thread.start(watcher);
+    spawn(&watcher);
     // web service
     // 
     router.get("/", staticTemplate!"index.dt");
