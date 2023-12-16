@@ -35,7 +35,7 @@ run: $(D) $(J) $(T)
 
 .PHONY: kicad
 kicad: $(D)
-	$(RUN) :kicad -- kicad/pcb/board.kicad_pcb
+	$(RUN) :kicad -- kicad/pcb/board.kicad_pcb > tmp/board.gerber
 
 # format
 .PHONY: format
