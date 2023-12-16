@@ -3,3 +3,5 @@ code meld doxygen clang-format
 g++ dmd
 inotify-tools
 mongodb-org
+kicad ngspice
+python3 python3-ply

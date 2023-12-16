@@ -22,7 +22,7 @@ BLD  = dub build --compiler=$(DC)
 RUN  = dub run   --compiler=$(DC)
 
 # src
-D += $(wildcard src/*.d)
+D += $(wildcard src/*.d) $(wildcard kicad/src/*.d)
 J += $(wildcard *.json)
 T += $(wildcard views/*.dt)
 S += $(wildcard static/*.js)
@@ -32,6 +32,10 @@ S += $(wildcard static/*.js)
 all: bin/$(MODULE)
 run: $(D) $(J) $(T)
 	$(RUN)
+
+.PHONY: kicad
+kicad: $(D)
+	$(RUN) :kicad -- kicad/pcb/board.kicad_pcb
 
 # format
 .PHONY: format
