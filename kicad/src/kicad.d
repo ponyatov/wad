@@ -5,7 +5,8 @@ import std.file;
 
 void main(string[] args) {
     writeln(args);
-    writeln(pcb(readText(args[1])));
+    auto gerber = File(args[2], "w");
+    gerber.writefln("%s", pcb(readText(args[1])));
 }
 
 import pegged.grammar;
