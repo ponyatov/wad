@@ -25,3 +25,7 @@ p {
 .ui-widget {
     /* color: black; */
 }
+
+[value] {
+    border: medium solid red;
+}
